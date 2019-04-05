@@ -1,0 +1,75 @@
+---
+title: 'Analysis 1: non-seasonal'
+output:
+  pdf_document: default
+  html_notebook: default
+---
+## Assignment Overview
+#### From handout
+
+For both projects, you should find an appropriate data set and proceed to identify, estimate, check, and finally produce forecasts from an appropriate ARIMA (SARIMA for seasonal) time series model. Other analyses are optional. If a leading indicator or an explanatory variable is available for your time series, you may want to fit a transfer function or an intervention model after we study this in class, but this should not be a part of the project that you turn in to me.
+For each project, a brief, (two to three pages, not including figures, will usually be adequate) but informative write-up should explain where and how the data were obtained, how the analysis proceeded, including any problems that were encountered (and, how they were solved), results of the analysis and conclusions derived. Suggestions and limitations for forecasting should also be included. The write-up should be done in MS Word and include charts, graphs and/or tables, but no raw computer output. Do not include any tables and figures in your project reports unless you refer to them in the text.
+
+
+```{r}
+# set wd
+setwd("~/Documents/isu_grad_school/stat_451/stat_451_final_project")
+
+# load libraries
+library(RTseries)
+
+# load data
+df <- read.csv(file="non_seasonal/data/formatted_data.csv", header=TRUE, sep=",")
+
+# transform df to time series
+df.ts <- ts(df$World.Energy.intensity.level.of.primary.energy..MJ..2011.PPP.GDP., start=1990, frequency = 1)
+
+#transform from time series to timeseries data object
+df.tsd <- tsd(df.ts, data.title = "World Energry Intensity Level of Primary Energy", time.units = "Years", response.units = "Energy Intensity")
+
+
+```
+
+
+## Further Instructions, Guidelines, and Suggestions for the Nonseasonal
+and Seasonal Projects
+
+a)Briefly describe the process from which your realization came and give the source of your data. If your data is publically available, provide a URL if your data were found on line or specific reference so that someone else could find your data source.
+b)Explain the purpose of your time series analysis and modeling.
+
+c) Use appropriate scaling of your data (e.g., use 808.35 million dollars instead of 808350000 dollars).
+d) When doing time series analysis for the purpose of forecasting, more data (longer realization) is not always better than less data (shorter realization). Justify your choice for the length of the realization that you use in your project.
+e) If you have any “missing observations” explain the cause and explain how you dealt with the problem (for example, it may be appropriate to interpolate to fill in a missing value).
+f) Plot your data versus time. Describe important events that occurred over the observation
+period that probably had an effect on the process.
+g) Use the RTSERIES function iden(...) to tentatively identify one or more possible
+ARMA/ARIMA/SARIMA models for your time series.
+h) Use the RTSERIES function esti(...) to estimate at least two different tentative models
+for your data. Try as many models as are needed until you find one that adequately describes your data, but for your presentation, include the results for no more than 5 different models.
+i) Briefly describe the steps that you followed in arriving at your “final” model or models.
+j) Briefly describe the behavior of the process that you have been studying and explain what
+you have learned about this process by studying the data. The written part of this project should be no longer than necessary to convey the important information. Note that conciseness is one of the evaluation criteria.
+k) Use iden ( ) to do a range mean analysis to get an indication of whether a transformation is needed or not. Many data sets do not require a transformation.
+l) Once you have chosen whether to transform or not, stay with that choice for the complete analysis. Otherwise, modeling becomes too complicated. You only need to include one or two range mean plots in your final report (original data and transformations, if one was used or seriously contemplated).
+If there was some question about whether a transformation is needed or not or what transformation to use, try alternatives after the initial analysis is complete. Plot of residuals versus predicted values and a comparison of predictions intervals are particularly useful in deciding whether to transform or not and what level of transformation to use.
+m) Give your data files meaningful names (e.g., MilkPrice.tsd) instead of short abbreviations (e.g. m.tsd)
+n) Prepare a table to compare the models that you have fit. Compare at least 3 plausible models. If you fit more than 5 models, present the results of the 5 best models. You should not report the results of models that perform poorly (I display poorly performing models in class for pedagogical reasons, but they have no place in a report). Do not report too many digits in your numerical results in the table. Typically 3 or 4 is enough. Extra
+4
+
+digits only clutter. I find concise summaries of comparative analyses to be most useful
+and informative.
+o) Include the esti( ) graphical output for the most interesting contrast between two models.
+Give esti( ) graphical output for only these most interesting two models. It is most
+interesting to compare two models that are plausible, but that give different results.
+p) Compare forecasts for the best two models in your set. Briefly comment on any
+differences between the forecasts for these two models. When comparing two plots, the axes should be the same. Use an argument like y.range=c(100, 1100) to the esti() function to control the axes, making it easier to do comparisons. If you do a hold-out analysis, be sure to make your comparisons in the context of the predictions intervals.
+q) Reports should not include any raw computer output. Include only relevant figures and computer output. Note that such output is relevant only if you refer to it in your write-up.
+r) Divide your report into several logical sections and properly title and number each section.
+s) Your reports should be concise but complete. Your project will be graded on accuracy, completeness, relevance of your graphical displays, tabular comparisons, and your statements, and on the report’s organization, conciseness and neatness.
+t) Whenever possible, use graphs plus a few words to make your points. Number your figures with informative captions and refer to them in your write up. In Word you can use right-click, Insert Caption and in the caption give a brief description of what is in the figure.
+u) Figures and tables should be integrated into the test and not placed at the end of the report. You can control the size of the figures, but do not make them so small that the axis labels are difficult to read. In tables, avoid scientific notation like 1.631e-03 and use 0.00163 instead. For p-values < 0.001, use < 0.001 as the exact magnitude of smaller numbers has little meaning.
+v) Note that Word has capabilities to do simple formulas with Greek letters, subscripts, etc. Learn how to use these capabilities and use them in your project (Insert -> Symbol).
+w) The first page of your project report should be a title page giving the title (choose a meaningful title that related to the data, not something like "Project 2") of the report and names of the team members.
+x) The second page of your project report should be an Executive Summary that is no more than one page long, giving the title, data set name, data source, final model, and a brief description of your conclusions. Conclusions should contain the stated purpose of your analysis. The conclusions (possibly expanded a little) should also be included at the end of the main report.
+y) You should submit your final project electronically (i.e., via email to wqmeeker@iastate.edu) in the Word format. The name of the Word document should contain the names of all team members in alphabetical order (e.g.,
+ 
